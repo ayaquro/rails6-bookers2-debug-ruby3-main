@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     @book = Book.new
+  end
 
   def edit
   end
@@ -18,7 +19,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to users_path(@user), notice: "You have updated user successfully."
     else
-      render "show"
+      render :edit
     end
   end
 
