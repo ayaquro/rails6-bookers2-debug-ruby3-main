@@ -21,10 +21,12 @@ class User < ApplicationRecord
   def get_profile_image
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
   end
-  
+
   # フォローしたときの処理
   def follow(user_id)
-    relationships.create(followed_id: user_id)
+    unless self == user_id
+     self.relationships.find_or_create_by(followed_id: user_id.to_i, follower_id: self.id)
+    end
   end
   # フォローを外すときの処理
   def unfollow(user_id)
@@ -34,5 +36,5 @@ class User < ApplicationRecord
   def following?(user)
     followings.include?(user)
   end
-  
+
 end
