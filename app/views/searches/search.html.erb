@@ -1,47 +1,10 @@
 <!--検索対象モデルがUserの時 -->
 <% if @range == "User" %>
-<h2>User search for "#{word}"</h2>
-  <table class='table'>
-    <thead>
-    <tr>
-      <th colspan="1"></th>
-      <th>Name</th>
-      <th>Introduction</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= image_tag user.get_profile_image, size:'50x50' %></td>
-        <td><%= user.name %></td>
-        <td><%= user.name %></td>
-        <td><%= user.introduction %></td>
-      </tr>
-    <% end %>
-  </tbody>
-    <!--検索対象モデルがUserではない時(= 検索対象モデルがBookの時) -->
-  <% else %>
-  <h2>Books search for "  "</h2>
-  <table class='table'>
-    <thead>
-    <tr>
-      <th colspan="1"></th>
-      <th>Title</th>
-      <th>Opinion</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @books.each do |book| %>
-      <tr>
-        <td><%= image_tag book.user.get_profile_image, size:'50x50' %></td>
-        <td><%= link_to book.title, book %></td>
-        <td><%= book.body %></td>
-      </tr>
-    <% end %>
-    </tbody>
-  <% end %>
-</table>
+<h3>Users search for "<%=@word %>"</h3>
+<%= render 'users/index', users: @records %>
 
-
-
-
+<!--検索対象モデルがUserではない時(= 検索対象モデルがBookの時) -->
+<% else %>
+  <h3>Books search for "<%= @word %>"</h3>
+  <%= render 'books/index', books: @records %>
+<% end %>

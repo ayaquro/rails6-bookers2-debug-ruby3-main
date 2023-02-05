@@ -5,9 +5,20 @@ class SearchesController < ApplicationController
     @range = params[:range]
 
     if @range == "User"
-      @users = User.looks(params[:search], params[:word])
+      @records = User.looks(params[:search], params[:word])
     else
-      @books = Book.looks(params[:search], params[:word])
+      @records = Book.looks(params[:search], params[:word])
     end
   end
 end
+
+#サンプルコードは以下の書き方
+#def search
+	#@model = params[:model]
+	#@content = params[:content]
+	#@method = params[:method]
+		#if @model == 'user'
+			#@records = User.search_for(@content, @method)
+		#else
+			#@records = Book.search_for(@content, @method)
+#end
