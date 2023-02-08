@@ -1,5 +1,6 @@
 class ChatsController < ApplicationController
  before_action :reject_non_related, only: [:show]
+
   def show
     #チャットする相手（@user）は誰？
    @user = User.find(params[:id])
@@ -8,11 +9,11 @@ class ChatsController < ApplicationController
   #その中に、チャットする相手とのルームがあるか確認
    user_rooms = UserRoom.find_by(user_id: @user.id, room_id: rooms)
 
-  #ユーザールームがnilじゃなかったら？（つまりあったら）  
-   unless user_room.nil?
+  #ユーザールームがnilじゃなかったら？（つまりあったら）
+   unless user_rooms.nil?
     #変数@roomにユーザー（自分と相手）と紐づいているroomを代入
     @room = user_rooms.room
-　　#ユーザールームがなかったら 
+   #ユーザールームがなかったら
    else
     #新しくRoomを作る
     @room = Room.new
@@ -40,11 +41,13 @@ class ChatsController < ApplicationController
   def chat_params
     params.require(:chat).permit(:message, :room_id)
   end
-  
+
   def reject_non_related
     user = User.find(params[:id])
     unless current_user.following?(user) && user.following?(current_user)
+    #現在のユーザー（私）が対象のuser(あなた）をフォローしていて、かつ対象のユーザーが現在のユーザーをフォローしていなかった場合）)
       redirect_to books_path
+      #bookの一覧画面にリダイレクトさせる
     end
   end
 
