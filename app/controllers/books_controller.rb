@@ -7,6 +7,10 @@ class BooksController < ApplicationController
     @book_comment = BookComment.new
     @booknew = Book.new
     @user = @book.user
+    @book_detail = Book.find(params[:id])
+    unless ViewCount.find_by(user_id: current_user.id, book_id: @book_detail.id)
+      current_user.view_counts.create(book_id: @book_detail.id)
+    end
   end
 
   def index
@@ -16,6 +20,10 @@ class BooksController < ApplicationController
     @books = Book.includes(:favorites).sort_by {|x| x.favorites.where(created_at: from...to).size}.reverse
     #↑reverseをつけないと、少ない順に表示される
     @book = Book.new
+    @book_detail = Book.find_by(user_id: current_user.id)
+    unless ViewCount.find_by(user_id: current_user.id, book_id: @book_detail.id)
+      current_user.view_counts.create(book_id: @book_detail.id)
+    end
   end
 
   def create
