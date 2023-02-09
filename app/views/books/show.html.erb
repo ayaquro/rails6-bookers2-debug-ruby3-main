@@ -22,10 +22,10 @@
           <td id="book_<%= @book.id %>">
             <%= render "favorites/favorite", book: @book %>
           </td>
+          <td class="book-comments-counter">
+            <%= render "book_comments/counter", book: @book %>
 
-          <td>コメント数：<%= @book.book_comments.count %></td>
-
-          <td class="view-count">閲覧数: <%= @book_detail.view_counts.count %></p>
+          <td class="view-count">閲覧数: <%= @book.view_counts.count %></p>
 
           <% if @user == current_user %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
