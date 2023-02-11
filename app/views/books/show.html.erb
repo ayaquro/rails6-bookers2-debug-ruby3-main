@@ -26,13 +26,15 @@
             <%= render "book_comments/counter", book: @book %>
 
           <td class="view-count">閲覧数: <%= @book.view_counts.count %></p>
-
+          
+          <td><%= render "static_rate", book: @book %></td>
           <% if @user == current_user %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
             <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"%></td>
           <% end %>
         </tr>
         </table>
+        
   <div id="comments-area"><%= render "book_comments/comment",book: @book, book_comment: @book_comment %></div>
   <div id="new-comment"><%= render "book_comments/form",book: @book, book_comment: @book_comment %></div>
 
